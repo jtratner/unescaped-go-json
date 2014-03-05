@@ -10,7 +10,7 @@ package main
 // See comments in debug.go for how to do this.
 
 import (
-	"encoding/gob"
+	"unescaped/gob"
 	"fmt"
 	"os"
 )

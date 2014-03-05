@@ -31,13 +31,13 @@ func Encode(dst, src []byte) int {
 }
 
 // ErrLength results from decoding an odd length slice.
-var ErrLength = errors.New("encoding/hex: odd length hex string")
+var ErrLength = errors.New("unescaped/hex: odd length hex string")
 
 // InvalidByteError values describe errors resulting from an invalid byte in a hex string.
 type InvalidByteError byte
 
 func (e InvalidByteError) Error() string {
-	return fmt.Sprintf("encoding/hex: invalid byte: %#U", rune(e))
+	return fmt.Sprintf("unescaped/hex: invalid byte: %#U", rune(e))
 }
 
 func DecodedLen(x int) int { return x / 2 }

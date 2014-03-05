@@ -6,7 +6,7 @@ package xml
 
 import (
 	"bytes"
-	"encoding"
+	"unescaped"
 	"errors"
 	"fmt"
 	"reflect"
@@ -202,7 +202,7 @@ func (p *Decoder) unmarshalInterface(val Unmarshaler, start *StartElement) error
 // unmarshalTextInterface unmarshals a single XML element into val.
 // The chardata contained in the element (but not its children)
 // is passed to the text unmarshaler.
-func (p *Decoder) unmarshalTextInterface(val encoding.TextUnmarshaler, start *StartElement) error {
+func (p *Decoder) unmarshalTextInterface(val unescaped.TextUnmarshaler, start *StartElement) error {
 	var buf []byte
 	depth := 1
 	for depth > 0 {
@@ -245,16 +245,16 @@ func (p *Decoder) unmarshalAttr(val reflect.Value, attr Attr) error {
 		}
 	}
 
-	// Not an UnmarshalerAttr; try encoding.TextUnmarshaler.
+	// Not an UnmarshalerAttr; try unescaped.TextUnmarshaler.
 	if val.CanInterface() && val.Type().Implements(textUnmarshalerType) {
 		// This is an unmarshaler with a non-pointer receiver,
 		// so it's likely to be incorrect, but we do what we're told.
-		return val.Interface().(encoding.TextUnmarshaler).UnmarshalText([]byte(attr.Value))
+		return val.Interface().(unescaped.TextUnmarshaler).UnmarshalText([]byte(attr.Value))
 	}
 	if val.CanAddr() {
 		pv := val.Addr()
 		if pv.CanInterface() && pv.Type().Implements(textUnmarshalerType) {
-			return pv.Interface().(encoding.TextUnmarshaler).UnmarshalText([]byte(attr.Value))
+			return pv.Interface().(unescaped.TextUnmarshaler).UnmarshalText([]byte(attr.Value))
 		}
 	}
 
@@ -265,7 +265,7 @@ func (p *Decoder) unmarshalAttr(val reflect.Value, attr Attr) error {
 var (
 	unmarshalerType     = reflect.TypeOf((*Unmarshaler)(nil)).Elem()
 	unmarshalerAttrType = reflect.TypeOf((*UnmarshalerAttr)(nil)).Elem()
-	textUnmarshalerType = reflect.TypeOf((*encoding.TextUnmarshaler)(nil)).Elem()
+	textUnmarshalerType = reflect.TypeOf((*unescaped.TextUnmarshaler)(nil)).Elem()
 )
 
 // Unmarshal a single XML element into val.
@@ -305,13 +305,13 @@ func (p *Decoder) unmarshal(val reflect.Value, start *StartElement) error {
 	}
 
 	if val.CanInterface() && val.Type().Implements(textUnmarshalerType) {
-		return p.unmarshalTextInterface(val.Interface().(encoding.TextUnmarshaler), start)
+		return p.unmarshalTextInterface(val.Interface().(unescaped.TextUnmarshaler), start)
 	}
 
 	if val.CanAddr() {
 		pv := val.Addr()
 		if pv.CanInterface() && pv.Type().Implements(textUnmarshalerType) {
-			return p.unmarshalTextInterface(pv.Interface().(encoding.TextUnmarshaler), start)
+			return p.unmarshalTextInterface(pv.Interface().(unescaped.TextUnmarshaler), start)
 		}
 	}
 
@@ -506,7 +506,7 @@ Loop:
 	}
 
 	if saveData.IsValid() && saveData.CanInterface() && saveData.Type().Implements(textUnmarshalerType) {
-		if err := saveData.Interface().(encoding.TextUnmarshaler).UnmarshalText(data); err != nil {
+		if err := saveData.Interface().(unescaped.TextUnmarshaler).UnmarshalText(data); err != nil {
 			return err
 		}
 		saveData = reflect.Value{}
@@ -515,7 +515,7 @@ Loop:
 	if saveData.IsValid() && saveData.CanAddr() {
 		pv := saveData.Addr()
 		if pv.CanInterface() && pv.Type().Implements(textUnmarshalerType) {
-			if err := pv.Interface().(encoding.TextUnmarshaler).UnmarshalText(data); err != nil {
+			if err := pv.Interface().(unescaped.TextUnmarshaler).UnmarshalText(data); err != nil {
 				return err
 			}
 			saveData = reflect.Value{}

@@ -6,7 +6,7 @@ package gob_test
 
 import (
 	"bytes"
-	"encoding/gob"
+	"unescaped/gob"
 	"fmt"
 	"log"
 )
@@ -14,7 +14,7 @@ import (
 // The Vector type has unexported fields, which the package cannot access.
 // We therefore write a BinaryMarshal/BinaryUnmarshal method pair to allow us
 // to send and receive the type with the gob package. These interfaces are
-// defined in the "encoding" package.
+// defined in the "unescaped" package.
 // We could equivalently use the locally defined GobEncode/GobDecoder
 // interfaces.
 type Vector struct {

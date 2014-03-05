@@ -5,7 +5,7 @@
 package xml_test
 
 import (
-	"encoding/xml"
+	"unescaped/xml"
 	"fmt"
 	"os"
 )

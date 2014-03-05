@@ -273,10 +273,10 @@ func TestRawTokenAltEncodingNoConverter(t *testing.T) {
 	if err == nil {
 		t.Fatalf("expected an error on second RawToken call")
 	}
-	const encoding = "x-testing-uppercase"
-	if !strings.Contains(err.Error(), encoding) {
+	const unescaped = "x-testing-uppercase"
+	if !strings.Contains(err.Error(), unescaped) {
 		t.Errorf("expected error to contain %q; got error: %v",
-			encoding, err)
+			unescaped, err)
 	}
 }
 

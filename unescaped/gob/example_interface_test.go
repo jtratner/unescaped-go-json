@@ -6,7 +6,7 @@ package gob_test
 
 import (
 	"bytes"
-	"encoding/gob"
+	"unescaped/gob"
 	"fmt"
 	"log"
 	"math"

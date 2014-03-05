@@ -9,7 +9,7 @@ package gob
 
 import (
 	"bytes"
-	"encoding"
+	"unescaped"
 	"errors"
 	"io"
 	"math"
@@ -780,9 +780,9 @@ func (dec *Decoder) decodeGobDecoder(ut *userTypeInfo, state *decoderState, v re
 	case xGob:
 		err = v.Interface().(GobDecoder).GobDecode(b)
 	case xBinary:
-		err = v.Interface().(encoding.BinaryUnmarshaler).UnmarshalBinary(b)
+		err = v.Interface().(unescaped.BinaryUnmarshaler).UnmarshalBinary(b)
 	case xText:
-		err = v.Interface().(encoding.TextUnmarshaler).UnmarshalText(b)
+		err = v.Interface().(unescaped.TextUnmarshaler).UnmarshalText(b)
 	}
 	if err != nil {
 		error_(err)

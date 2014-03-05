@@ -9,7 +9,7 @@
 // interface once can make a type useful in multiple encodings.
 // Standard types that implement these interfaces include time.Time and net.IP.
 // The interfaces come in pairs that produce and consume encoded data.
-package encoding
+package unescaped
 
 // BinaryMarshaler is the interface implemented by an object that can
 // marshal itself into a binary form.

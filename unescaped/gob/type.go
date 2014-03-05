@@ -5,7 +5,7 @@
 package gob
 
 import (
-	"encoding"
+	"unescaped"
 	"errors"
 	"fmt"
 	"os"
@@ -114,10 +114,10 @@ func validUserType(rt reflect.Type) (ut *userTypeInfo, err error) {
 var (
 	gobEncoderInterfaceType        = reflect.TypeOf((*GobEncoder)(nil)).Elem()
 	gobDecoderInterfaceType        = reflect.TypeOf((*GobDecoder)(nil)).Elem()
-	binaryMarshalerInterfaceType   = reflect.TypeOf((*encoding.BinaryMarshaler)(nil)).Elem()
-	binaryUnmarshalerInterfaceType = reflect.TypeOf((*encoding.BinaryUnmarshaler)(nil)).Elem()
-	textMarshalerInterfaceType     = reflect.TypeOf((*encoding.TextMarshaler)(nil)).Elem()
-	textUnmarshalerInterfaceType   = reflect.TypeOf((*encoding.TextUnmarshaler)(nil)).Elem()
+	binaryMarshalerInterfaceType   = reflect.TypeOf((*unescaped.BinaryMarshaler)(nil)).Elem()
+	binaryUnmarshalerInterfaceType = reflect.TypeOf((*unescaped.BinaryUnmarshaler)(nil)).Elem()
+	textMarshalerInterfaceType     = reflect.TypeOf((*unescaped.TextMarshaler)(nil)).Elem()
+	textUnmarshalerInterfaceType   = reflect.TypeOf((*unescaped.TextUnmarshaler)(nil)).Elem()
 )
 
 // implementsInterface reports whether the type implements the

@@ -7,7 +7,7 @@
 package base32_test
 
 import (
-	"encoding/base32"
+	"unescaped/base32"
 	"fmt"
 	"os"
 )

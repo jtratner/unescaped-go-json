@@ -6,7 +6,7 @@ package gob
 
 import (
 	"bytes"
-	"encoding"
+	"unescaped"
 	"math"
 	"reflect"
 	"unsafe"
@@ -522,9 +522,9 @@ func (enc *Encoder) encodeGobEncoder(b *bytes.Buffer, ut *userTypeInfo, v reflec
 	case xGob:
 		data, err = v.Interface().(GobEncoder).GobEncode()
 	case xBinary:
-		data, err = v.Interface().(encoding.BinaryMarshaler).MarshalBinary()
+		data, err = v.Interface().(unescaped.BinaryMarshaler).MarshalBinary()
 	case xText:
-		data, err = v.Interface().(encoding.TextMarshaler).MarshalText()
+		data, err = v.Interface().(unescaped.TextMarshaler).MarshalText()
 	}
 	if err != nil {
 		error_(err)

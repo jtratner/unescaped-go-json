@@ -171,7 +171,7 @@ func TestRegistrationNaming(t *testing.T) {
 		name string
 	}{
 		{&N1{}, "*gob.N1"},
-		{N2{}, "encoding/gob.N2"},
+		{N2{}, "unescaped/gob.N2"},
 	}
 
 	for _, tc := range testCases {

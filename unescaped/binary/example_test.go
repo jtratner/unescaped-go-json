@@ -6,7 +6,7 @@ package binary_test
 
 import (
 	"bytes"
-	"encoding/binary"
+	"unescaped/binary"
 	"fmt"
 	"math"
 )

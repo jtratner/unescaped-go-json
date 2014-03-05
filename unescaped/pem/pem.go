@@ -9,7 +9,7 @@ package pem
 
 import (
 	"bytes"
-	"encoding/base64"
+	"unescaped/base64"
 	"io"
 	"sort"
 )

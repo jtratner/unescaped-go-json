@@ -77,9 +77,9 @@ type errTest struct {
 }
 
 var errTests = []errTest{
-	{"0", "encoding/hex: odd length hex string"},
-	{"0g", "encoding/hex: invalid byte: U+0067 'g'"},
-	{"0\x01", "encoding/hex: invalid byte: U+0001"},
+	{"0", "unescaped/hex: odd length hex string"},
+	{"0g", "unescaped/hex: invalid byte: U+0067 'g'"},
+	{"0\x01", "unescaped/hex: invalid byte: U+0001"},
 }
 
 func TestInvalidErr(t *testing.T) {

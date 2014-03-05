@@ -6,7 +6,7 @@ package asn1
 
 import (
 	"bytes"
-	"encoding/hex"
+	"unescaped/hex"
 	"math/big"
 	"testing"
 	"time"

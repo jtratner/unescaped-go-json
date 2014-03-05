@@ -7,7 +7,7 @@
 package base64_test
 
 import (
-	"encoding/base64"
+	"unescaped/base64"
 	"fmt"
 	"os"
 )
