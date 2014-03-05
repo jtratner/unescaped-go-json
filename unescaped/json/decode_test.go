@@ -6,7 +6,7 @@ package json
 
 import (
 	"bytes"
-	"encoding"
+	"unescaped"
 	"fmt"
 	"image"
 	"reflect"
@@ -80,7 +80,7 @@ func (u *unmarshalerText) UnmarshalText(b []byte) error {
 	return nil
 }
 
-var _ encoding.TextUnmarshaler = (*unmarshalerText)(nil)
+var _ unescaped.TextUnmarshaler = (*unmarshalerText)(nil)
 
 type ustructText struct {
 	M unmarshalerText

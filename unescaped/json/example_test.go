@@ -5,7 +5,7 @@
 package json_test
 
 import (
-	"encoding/json"
+	"unescaped/json"
 	"fmt"
 	"io"
 	"log"

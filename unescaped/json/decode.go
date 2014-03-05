@@ -8,8 +8,8 @@
 package json
 
 import (
-	"encoding"
-	"encoding/base64"
+	"unescaped"
+	"unescaped/base64"
 	"errors"
 	"fmt"
 	"reflect"
@@ -292,7 +292,7 @@ func (d *decodeState) value(v reflect.Value) {
 // until it gets to a non-pointer.
 // if it encounters an Unmarshaler, indirect stops and returns that.
 // if decodingNull is true, indirect stops at the last pointer so it can be set to nil.
-func (d *decodeState) indirect(v reflect.Value, decodingNull bool) (Unmarshaler, encoding.TextUnmarshaler, reflect.Value) {
+func (d *decodeState) indirect(v reflect.Value, decodingNull bool) (Unmarshaler, unescaped.TextUnmarshaler, reflect.Value) {
 	// If v is a named type and is addressable,
 	// start with its address, so that if the type has pointer methods,
 	// we find them.
@@ -324,7 +324,7 @@ func (d *decodeState) indirect(v reflect.Value, decodingNull bool) (Unmarshaler,
 			if u, ok := v.Interface().(Unmarshaler); ok {
 				return u, nil, reflect.Value{}
 			}
-			if u, ok := v.Interface().(encoding.TextUnmarshaler); ok {
+			if u, ok := v.Interface().(unescaped.TextUnmarshaler); ok {
 				return nil, u, reflect.Value{}
 			}
 		}

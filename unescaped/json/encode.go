@@ -12,8 +12,7 @@ package json
 
 import (
 	"bytes"
-	"encoding"
-	"encoding/base64"
+	"fmt"
 	"math"
 	"reflect"
 	"runtime"
@@ -21,6 +20,8 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"unescaped"
+	"unescaped/base64"
 	"unicode"
 	"unicode/utf8"
 )
@@ -128,6 +129,7 @@ import (
 // an infinite recursion.
 //
 func Marshal(v interface{}) ([]byte, error) {
+	fmt.Println("UNESCAPED MARSHAL CALLED")
 	e := &encodeState{}
 	err := e.marshal(v)
 	if err != nil {
@@ -159,30 +161,32 @@ func MarshalIndent(v interface{}, prefix, indent string) ([]byte, error) {
 func HTMLEscape(dst *bytes.Buffer, src []byte) {
 	// The characters can only appear in string literals,
 	// so just scan the string one byte at a time.
-	start := 0
-	for i, c := range src {
-		if c == '<' || c == '>' || c == '&' {
-			if start < i {
-				dst.Write(src[start:i])
-			}
-			dst.WriteString(`\u00`)
-			dst.WriteByte(hex[c>>4])
-			dst.WriteByte(hex[c&0xF])
-			start = i + 1
-		}
-		// Convert U+2028 and U+2029 (E2 80 A8 and E2 80 A9).
-		if c == 0xE2 && i+2 < len(src) && src[i+1] == 0x80 && src[i+2]&^1 == 0xA8 {
-			if start < i {
-				dst.Write(src[start:i])
-			}
-			dst.WriteString(`\u202`)
-			dst.WriteByte(hex[src[i+2]&0xF])
-			start = i + 3
-		}
-	}
-	if start < len(src) {
-		dst.Write(src[start:])
-	}
+	fmt.Println("HTMLESCAPE CALLED")
+	dst.Write(src)
+	// start := 0
+	// for i, c := range src {
+	// 	if c == '<' || c == '>' || c == '&' {
+	// 		if start < i {
+	// 			dst.Write(src[start:i])
+	// 		}
+	// 		dst.WriteString(`\u00`)
+	// 		dst.WriteByte(hex[c>>4])
+	// 		dst.WriteByte(hex[c&0xF])
+	// 		start = i + 1
+	// 	}
+	// 	// Convert U+2028 and U+2029 (E2 80 A8 and E2 80 A9).
+	// 	if c == 0xE2 && i+2 < len(src) && src[i+1] == 0x80 && src[i+2]&^1 == 0xA8 {
+	// 		if start < i {
+	// 			dst.Write(src[start:i])
+	// 		}
+	// 		dst.WriteString(`\u202`)
+	// 		dst.WriteByte(hex[src[i+2]&0xF])
+	// 		start = i + 3
+	// 	}
+	// }
+	// if start < len(src) {
+	// 	dst.Write(src[start:])
+	// }
 }
 
 // Marshaler is the interface implemented by objects that
@@ -355,7 +359,7 @@ func typeEncoder(t reflect.Type) encoderFunc {
 
 var (
 	marshalerType     = reflect.TypeOf(new(Marshaler)).Elem()
-	textMarshalerType = reflect.TypeOf(new(encoding.TextMarshaler)).Elem()
+	textMarshalerType = reflect.TypeOf(new(unescaped.TextMarshaler)).Elem()
 )
 
 // newTypeEncoder constructs an encoderFunc for a type.
@@ -451,7 +455,7 @@ func textMarshalerEncoder(e *encodeState, v reflect.Value, quoted bool) {
 		e.WriteString("null")
 		return
 	}
-	m := v.Interface().(encoding.TextMarshaler)
+	m := v.Interface().(unescaped.TextMarshaler)
 	b, err := m.MarshalText()
 	if err == nil {
 		_, err = e.stringBytes(b)
@@ -467,7 +471,7 @@ func addrTextMarshalerEncoder(e *encodeState, v reflect.Value, quoted bool) {
 		e.WriteString("null")
 		return
 	}
-	m := va.Interface().(encoding.TextMarshaler)
+	m := va.Interface().(unescaped.TextMarshaler)
 	b, err := m.MarshalText()
 	if err == nil {
 		_, err = e.stringBytes(b)
